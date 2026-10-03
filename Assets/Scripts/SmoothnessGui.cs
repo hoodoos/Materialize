@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.ComponentModel;
 
@@ -176,6 +176,15 @@ public class SmoothnessSettings {
 }
 
 public class SmoothnessGui : MonoBehaviour {
+	// B75: shared initialization; no Update/OnGUI required.
+    public void InitializeForAgent(MainGui gui, GameObject preview) {
+        enabled = false;
+        testObject = preview;
+        thisMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+        MainGuiScript = gui;
+        Start();
+    }
+
 
 	public MainGui MainGuiScript;
 
@@ -236,13 +245,13 @@ public class SmoothnessGui : MonoBehaviour {
 			InitializeSettings ();
 		}
 
-		_SampleColorMap1.SetPixel (1, 1, SS.SampleColor1);
+		_SampleColorMap1.SetPixel (0, 0, SS.SampleColor1);
 		_SampleColorMap1.Apply ();
 
-		_SampleColorMap2.SetPixel (1, 1, SS.SampleColor2);
+		_SampleColorMap2.SetPixel (0, 0, SS.SampleColor2);
 		_SampleColorMap2.Apply ();
 
-		_SampleColorMap3.SetPixel (1, 1, SS.SampleColor3);
+		_SampleColorMap3.SetPixel (0, 0, SS.SampleColor3);
 		_SampleColorMap3.Apply ();
 
 		doStuff = true;
@@ -256,15 +265,15 @@ public class SmoothnessGui : MonoBehaviour {
 			SS = new SmoothnessSettings ();
 
 			_SampleColorMap1 = new Texture2D (1, 1, TextureFormat.ARGB32, false, true);
-			_SampleColorMap1.SetPixel (1, 1, SS.SampleColor1);
+			_SampleColorMap1.SetPixel (0, 0, SS.SampleColor1);
 			_SampleColorMap1.Apply ();
 			
 			_SampleColorMap2 = new Texture2D (1, 1, TextureFormat.ARGB32, false, true);
-			_SampleColorMap2.SetPixel (1, 1, SS.SampleColor2);
+			_SampleColorMap2.SetPixel (0, 0, SS.SampleColor2);
 			_SampleColorMap2.Apply ();
 			
 			_SampleColorMap3 = new Texture2D (1, 1, TextureFormat.ARGB32, false, true);
-			_SampleColorMap3.SetPixel (1, 1, SS.SampleColor3);
+			_SampleColorMap3.SetPixel (0, 0, SS.SampleColor3);
 			_SampleColorMap3.Apply ();
 			
 			settingsInitialized = true;
@@ -416,21 +425,21 @@ public class SmoothnessGui : MonoBehaviour {
 			if( currentSelection == 1 ){
 				SS.SampleUV1 = pixelUV;
 				SS.SampleColor1 = sampledColor;
-				_SampleColorMap1.SetPixel (1, 1, SS.SampleColor1);
+				_SampleColorMap1.SetPixel (0, 0, SS.SampleColor1);
 				_SampleColorMap1.Apply ();
 			}
 
 			if( currentSelection == 2 ){
 				SS.SampleUV2 = pixelUV;
 				SS.SampleColor2 = sampledColor;
-				_SampleColorMap2.SetPixel (1, 1, SS.SampleColor2);
+				_SampleColorMap2.SetPixel (0, 0, SS.SampleColor2);
 				_SampleColorMap2.Apply ();
 			}
 
 			if( currentSelection == 3 ){
 				SS.SampleUV3 = pixelUV;
 				SS.SampleColor3 = sampledColor;
-				_SampleColorMap3.SetPixel (1, 1, SS.SampleColor3);
+				_SampleColorMap3.SetPixel (0, 0, SS.SampleColor3);
 				_SampleColorMap3.Apply ();
 			}
 			

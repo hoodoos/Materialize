@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.ComponentModel;
 
@@ -102,6 +102,15 @@ public class NormalFromHeightSettings {
 }
 
 public class NormalFromHeightGui : MonoBehaviour {
+	// B75: shared initialization; no Update/OnGUI required.
+    public void InitializeForAgent(MainGui gui, GameObject preview) {
+        enabled = false;
+        testObject = preview;
+        thisMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+
+        Start();
+    }
+
 
 	MainGui MGS;
 

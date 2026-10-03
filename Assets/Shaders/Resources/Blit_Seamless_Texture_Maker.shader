@@ -1,4 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "Hidden/Blit_Seamless_Texture_Maker" {
 	Properties {
@@ -6,6 +6,9 @@ Shader "Hidden/Blit_Seamless_Texture_Maker" {
 	}
 		
 	CGINCLUDE
+	float _PreserveAlpha;
+	sampler2D _TargetAlphaTex;
+	sampler2D _FinalAlphaTex;
 	
 	#include "UnityCG.cginc"
 	
@@ -136,7 +139,7 @@ Shader "Hidden/Blit_Seamless_Texture_Maker" {
 		if( _IsHeight > 0.5 ){
 			return half4( heightTex.xxx, 1.0 );
 		} else {
-			return half4( mainTex.xyz, 1.0 );
+			return half4(mainTex.xyz, _PreserveAlpha > 0.5 ? mainTex.a : 1.0);
 		}
 
 	}
@@ -209,6 +212,74 @@ Shader "Hidden/Blit_Seamless_Texture_Maker" {
 
 	}
 	
+	float4 frag_splat_alpha (v2f IN) : SV_Target
+	{
+
+		float2 overlap = float2( _OverlapX, _OverlapY );
+		float2 invOverlap = 1.0 - float2( _OverlapX, _OverlapY );
+		float2 oneOverOverlap = 1.0 / float2( _OverlapX, _OverlapY );
+
+		float4 targetTex = tex2Dlod( _TargetTex, float4(IN.uv,0,0) );
+		targetTex.w = ( 1.0 / targetTex.w ) - 1.0;
+		float alpha = tex2Dlod(_TargetAlphaTex, float4(IN.uv,0,0)).r;
+
+		for( int i = 0; i < OffsetKernelSamples; i++ ){
+
+			float2 localPos = ( IN.uv - _SplatKernel.xy + OffsetKernel[i].xy) * ( 1.0 / ( _SplatScale * _SplatKernel.z ) ) * _TargetAspectRatio;
+
+			float rotation = _SplatRotation * -6.28318530718;
+			rotation += _SplatRotationRandom * _SplatRandomize * -6.28318530718;
+			float2 tempPos = localPos;
+			localPos.x = cos( rotation ) * tempPos.x - sin( rotation ) * tempPos.y;
+			localPos.y = sin( rotation ) * tempPos.x + cos( rotation ) * tempPos.y;
+
+			float2 localMaskPos = localPos * 2.0;
+			float CenterMask = pow( saturate( ( ( 1.0 - saturate( abs( localMaskPos.x ) ) ) * ( 1.0 - saturate( abs( localMaskPos.y ) ) ) - 0.1 ) * 2.0 ), 0.3 );
+			float UVMask = saturate( ( 1.0 - saturate( abs( localMaskPos.x ) ) ) * ( 1.0 - saturate( abs( localMaskPos.y ) ) ) * 10.0 );
+
+			localPos *= _AspectRatio.yx;
+			localPos *= ( 1.0 / (_Wobble.z + 1.0) );
+			localPos += _Wobble.xy * _Wobble.z;
+			localPos += 0.5;
+
+			half heightTex = tex2Dlod(_HeightTex, float4( localPos.xy, 0, 0 ) ).x;
+			half4 thisTex = tex2Dlod(_MainTex, float4( localPos.xy, 0, 0 ) );
+
+			half SSHigh =  0.01 + ( 0.5 * saturate( _Falloff ) );
+			half SSLow =  -0.01 - ( 0.5 * saturate( _Falloff ) );
+			if( _IsHeight > 0.5 ){
+				SSHigh =  0.01 + 0.25;
+				SSLow =  -0.01 - 0.25;
+			}
+
+			if( _IsNormal > 0.5 ){
+				float3 tempTex = thisTex.xyz * 2.0 - 1.0;
+
+
+				if( _FlipY > 0.5 ){
+					rotation *= -1.0;
+				}
+
+				thisTex.x = cos( rotation ) * tempTex.x - sin( rotation ) * tempTex.y;
+				thisTex.y = sin( rotation ) * tempTex.x + cos( rotation ) * tempTex.y;
+				//thisTex.y *= -1.0;
+				thisTex.xy = thisTex.xy * 0.5 + 0.5;
+			}
+
+
+			half thisHeight = ( heightTex.x + 0.2 ) * CenterMask * UVMask;
+			half TexBlend = smoothstep( SSLow, SSHigh, targetTex.w - thisHeight );
+			alpha = lerp(thisTex.a, alpha, TexBlend);
+			targetTex.w = max( targetTex.w, thisHeight );
+
+		}
+
+		targetTex.w = 1.0 / ( targetTex.w + 1.0 );
+
+		return float4(alpha,0,0,1);
+
+	}
+
 	float4 frag_clear (v2f IN) : SV_Target
 	{
 		return float4(0,0,0,1);
@@ -217,7 +288,7 @@ Shader "Hidden/Blit_Seamless_Texture_Maker" {
 	float4 frag_transfer (v2f IN) : SV_Target
 	{
 		half4 mainTex = tex2Dlod(_MainTex, float4( IN.uv, 0, 0 ) );
-		return float4(mainTex.xyz,1);
+		return float4(mainTex.xyz, _PreserveAlpha > 0.5 ? tex2Dlod(_FinalAlphaTex,float4(IN.uv,0,0)).r : 1);
 	}
 	
 	ENDCG
@@ -276,7 +347,15 @@ Shader "Hidden/Blit_Seamless_Texture_Maker" {
 			ENDCG
 		}
 		 
-	} 
-	
+
+        Pass {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag_splat_alpha
+            #pragma target 3.0
+            ENDCG
+        }
+}
+
 	Fallback off
 }

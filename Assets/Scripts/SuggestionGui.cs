@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class SuggestionGui : MonoBehaviour {
@@ -7,7 +7,7 @@ public class SuggestionGui : MonoBehaviour {
 	MainGui MainGuiScript;
 
 	public GameObject AuthenticateObject;
-	AuthenticateGui AuthenticateScript;
+	// Upstream authentication source is absent from the GPL release.
 	
 	string SuggestionText = "";
 	string stringEmail = "";
@@ -29,8 +29,8 @@ public class SuggestionGui : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		AuthenticateScript = AuthenticateObject.GetComponent<AuthenticateGui> ();
-		stringEmail = AuthenticateScript.stringEmail;
+
+		stringEmail = "";
 		Debug.Log ("Suggestion Box Email: " + stringEmail);
 		windowRect.position = new Vector2( Screen.width - 310, 50 );
 

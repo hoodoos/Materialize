@@ -1,10 +1,11 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "Hidden/Blit_Alignment" {
 	Properties {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 	}
 	CGINCLUDE
+	float _PreserveAlpha;
 	
 	#include "UnityCG.cginc"
 	
@@ -62,7 +63,7 @@ Shader "Hidden/Blit_Alignment" {
 		half4 c = tex2D (_MainTex, distortUV3);
 		
 
-		return float4( c.xyz, 1 );
+		return float4(c.xyz, _PreserveAlpha > 0.5 ? c.a : 1);
 
 	}
 	
@@ -78,7 +79,7 @@ Shader "Hidden/Blit_Alignment" {
 		
 		half4 c = tex2D (_MainTex, newUV);
 
-		return float4( c.xyz, 1 );
+		return float4(c.xyz, _PreserveAlpha > 0.5 ? c.a : 1);
 
 	}
 	
@@ -131,7 +132,7 @@ Shader "Hidden/Blit_Alignment" {
 
 		half4 c = tex2D (_MainTex, UV);
 
-		return float4( c.xyz, 1 );
+		return float4(c.xyz, _PreserveAlpha > 0.5 ? c.a : 1);
 
 	}	
 	

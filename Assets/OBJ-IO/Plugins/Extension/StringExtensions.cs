@@ -1,3 +1,4 @@
+#if MATERIALIZE_LEGACY_OBJ
 
 using System;
 using System.Globalization;
@@ -41,3 +42,4 @@ public static class StringExt
         return true;
     }
 }
+#endif

@@ -1,0 +1,243 @@
+{
+  "version": 1,
+  "alpha": "preserve",
+  "filters": {
+    "diffuse": {
+      "AvgColorBlurSize": 50,
+      "BlurSize": 20,
+      "BlurContrast": 0.0,
+      "LightMaskPow": 0.5,
+      "LightPow": 0.0,
+      "DarkMaskPow": 0.5,
+      "DarkPow": 0.0,
+      "HotSpot": 0.0,
+      "DarkSpot": 0.0,
+      "FinalContrast": 1.0,
+      "FinalBias": 0.0,
+      "ColorLerp": 0.5,
+      "Saturation": 1.0
+    },
+    "height": {
+      "useAdjustedDiffuse": true,
+      "useOriginalDiffuse": false,
+      "useNormal": false,
+      "Blur0Weight": 0.15,
+      "Blur1Weight": 0.19,
+      "Blur2Weight": 0.3,
+      "Blur3Weight": 0.5,
+      "Blur4Weight": 0.7,
+      "Blur5Weight": 0.9,
+      "Blur6Weight": 1.0,
+      "Blur0Contrast": 1.0,
+      "Blur1Contrast": 1.0,
+      "Blur2Contrast": 1.0,
+      "Blur3Contrast": 1.0,
+      "Blur4Contrast": 1.0,
+      "Blur5Contrast": 1.0,
+      "Blur6Contrast": 1.0,
+      "FinalContrast": 1.5,
+      "FinalBias": 0.0,
+      "FinalGain": 0.0,
+      "SampleColor1": [
+        0,
+        0,
+        0
+      ],
+      "SampleUV1": [
+        0,
+        0
+      ],
+      "UseSample1": false,
+      "IsolateSample1": false,
+      "HueWeight1": 1.0,
+      "SatWeight1": 0.5,
+      "LumWeight1": 0.2,
+      "MaskLow1": 0.0,
+      "MaskHigh1": 1.0,
+      "Sample1Height": 0.5,
+      "SampleColor2": [
+        0,
+        0,
+        0
+      ],
+      "SampleUV2": [
+        0,
+        0
+      ],
+      "UseSample2": false,
+      "IsolateSample2": false,
+      "HueWeight2": 1.0,
+      "SatWeight2": 0.5,
+      "LumWeight2": 0.2,
+      "MaskLow2": 0.0,
+      "MaskHigh2": 1.0,
+      "Sample2Height": 0.3,
+      "SampleBlend": 0.5,
+      "Spread": 50.0,
+      "SpreadBoost": 1.0
+    },
+    "normal": {
+      "Blur0Contrast": 20.0,
+      "Blur0Weight": 0.3,
+      "Blur1Weight": 0.35,
+      "Blur2Weight": 0.5,
+      "Blur3Weight": 0.8,
+      "Blur4Weight": 1.0,
+      "Blur5Weight": 0.95,
+      "Blur6Weight": 0.8,
+      "FinalContrast": 2,
+      "Angularity": 0.0,
+      "AngularIntensity": 0.5,
+      "UseDiffuse": true,
+      "ShapeRecognition": 0.0,
+      "LightRotation": 0.0,
+      "SlopeBlur": 50,
+      "ShapeBias": 0.5
+    },
+    "metallic": {
+      "MetalColor": [
+        0,
+        0,
+        0
+      ],
+      "SampleUV": [
+        0,
+        0
+      ],
+      "HueWeight": 1.0,
+      "SatWeight": 0.5,
+      "LumWeight": 0.2,
+      "MaskLow": 0.0,
+      "MaskHigh": 1.0,
+      "BlurSize": 0,
+      "OverlayBlurSize": 30,
+      "BlurOverlay": 1.0,
+      "FinalContrast": 0,
+      "FinalBias": -0.5,
+      "useAdjustedDiffuse": false,
+      "useOriginalDiffuse": true
+    },
+    "smoothness": {
+      "SampleColor1": [
+        0,
+        0,
+        0
+      ],
+      "SampleUV1": [
+        0,
+        0
+      ],
+      "SampleColor2": [
+        0,
+        0,
+        0
+      ],
+      "SampleUV2": [
+        0,
+        0
+      ],
+      "SampleColor3": [
+        0,
+        0,
+        0
+      ],
+      "SampleUV3": [
+        0,
+        0
+      ],
+      "MetalSmoothness": 0.7,
+      "UseSample1": false,
+      "IsolateSample1": false,
+      "HueWeight1": 1.0,
+      "SatWeight1": 0.5,
+      "LumWeight1": 0.2,
+      "MaskLow1": 0.0,
+      "MaskHigh1": 1.0,
+      "Sample1Smoothness": 0.5,
+      "UseSample2": false,
+      "IsolateSample2": false,
+      "HueWeight2": 1.0,
+      "SatWeight2": 0.5,
+      "LumWeight2": 0.2,
+      "MaskLow2": 0.0,
+      "MaskHigh2": 1.0,
+      "Sample2Smoothness": 0.3,
+      "UseSample3": false,
+      "IsolateSample3": false,
+      "HueWeight3": 1.0,
+      "SatWeight3": 0.5,
+      "LumWeight3": 0.2,
+      "MaskLow3": 0.0,
+      "MaskHigh3": 1.0,
+      "Sample3Smoothness": 0.2,
+      "BaseSmoothness": 0.1,
+      "BlurSize": 0,
+      "OverlayBlurSize": 30,
+      "BlurOverlay": 3.0,
+      "FinalContrast": 1.0,
+      "FinalBias": 0.0,
+      "useAdjustedDiffuse": false,
+      "useOriginalDiffuse": true
+    },
+    "ao": {
+      "Spread": 50.0,
+      "FinalBias": 0.0,
+      "FinalContrast": 1.0,
+      "Depth": 100.0,
+      "Blend": 1.0,
+      "BlendAmount": 1.0
+    },
+    "edge": {
+      "Blur0Contrast": 1.0,
+      "Blur0Weight": 1.0,
+      "Blur1Weight": 0.5,
+      "Blur2Weight": 0.3,
+      "Blur3Weight": 0.5,
+      "Blur4Weight": 0.7,
+      "Blur5Weight": 0.7,
+      "Blur6Weight": 0.3,
+      "FinalContrast": 1.0,
+      "FinalBias": 0.0,
+      "EdgeAmount": 1.0,
+      "CreviceAmount": 1.0,
+      "Pinch": 1.0,
+      "Pillow": 1.0
+    }
+  },
+  "alignment": {
+    "enabled": false,
+    "pointTL": [
+      0,
+      1
+    ],
+    "pointTR": [
+      1,
+      1
+    ],
+    "pointBL": [
+      0,
+      0
+    ],
+    "pointBR": [
+      1,
+      0
+    ],
+    "LensDistort": 0,
+    "PerspectiveX": 0,
+    "PerspectiveY": 0
+  },
+  "tiling": {
+    "enabled": false,
+    "technique": "overlap",
+    "width": 2048,
+    "height": 2048,
+    "Falloff": 0.1,
+    "OverlapX": 0.2,
+    "OverlapY": 0.2,
+    "SplatRotation": 0,
+    "SplatRotationRandom": 0.25,
+    "SplatScale": 1,
+    "SplatWobble": 0.2,
+    "SplatRandomize": 0
+  }
+}

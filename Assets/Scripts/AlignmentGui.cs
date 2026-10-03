@@ -1,7 +1,28 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class AlignmentGui : MonoBehaviour {
+    // Shared with the GUI: explicit uniforms and the original SetMaps passes.
+    public IEnumerator ExecuteForAgent(MaterializeAgent.AlignmentSettings settings, GameObject preview, bool preserveAlpha, bool reference = false) {
+        enabled = false;
+        testObject = preview;
+        thisMaterial = new Material(Shader.Find("Hidden/Blit_Alignment"));
+        Initialize();
+        if (reference) blitMaterial.shader = Shader.Find("Hidden/AgentReference/Blit_Alignment");
+        pointTL = settings.pointTL; pointTR = settings.pointTR;
+        pointBL = settings.pointBL; pointBR = settings.pointBR;
+        LensDistort = settings.LensDistort;
+        PerspectiveX = settings.PerspectiveX; PerspectiveY = settings.PerspectiveY;
+        blitMaterial.SetVector("_PointTL", pointTL); blitMaterial.SetVector("_PointTR", pointTR);
+        blitMaterial.SetVector("_PointBL", pointBL); blitMaterial.SetVector("_PointBR", pointBR);
+        blitMaterial.SetFloat("_Width", textureToAlign.width); blitMaterial.SetFloat("_Height", textureToAlign.height);
+        blitMaterial.SetFloat("_Lens", LensDistort);
+        blitMaterial.SetFloat("_PerspectiveX", PerspectiveX); blitMaterial.SetFloat("_PerspectiveY", PerspectiveY);
+        blitMaterial.SetFloat("_PreserveAlpha", preserveAlpha ? 1 : 0);
+        yield return SetMaps();
+        Close();
+    }
+
 	
 	RenderTexture _LensMap;
 	RenderTexture _AlignMap;
