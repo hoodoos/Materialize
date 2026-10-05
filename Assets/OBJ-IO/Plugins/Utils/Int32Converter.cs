@@ -1,4 +1,5 @@
-﻿
+#if MATERIALIZE_LEGACY_OBJ
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -37,3 +38,5 @@ public struct Int32Converter
         return new Int32Converter(value);
     }
 }
+
+#endif

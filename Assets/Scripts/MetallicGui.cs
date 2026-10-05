@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.ComponentModel;
 
@@ -87,6 +87,15 @@ public class MetallicSettings {
 }
 
 public class MetallicGui : MonoBehaviour {
+	// B75: shared initialization; no Update/OnGUI required.
+    public void InitializeForAgent(MainGui gui, GameObject preview) {
+        enabled = false;
+        testObject = preview;
+        thisMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+        MainGuiScript = gui;
+        Start();
+    }
+
 
 	public MainGui MainGuiScript;
 	
@@ -139,7 +148,7 @@ public class MetallicGui : MonoBehaviour {
 			InitializeSettings ();
 		}
 
-		_MetalColorMap.SetPixel (1, 1, MS.MetalColor);
+		_MetalColorMap.SetPixel (0, 0, MS.MetalColor);
 		_MetalColorMap.Apply ();
 
 		doStuff = true;
@@ -152,7 +161,7 @@ public class MetallicGui : MonoBehaviour {
 			MS = new MetallicSettings ();
 
 			_MetalColorMap = new Texture2D (1, 1, TextureFormat.ARGB32, false, true);
-			_MetalColorMap.SetPixel (1, 1, MS.MetalColor);
+			_MetalColorMap.SetPixel (0, 0, MS.MetalColor);
 			_MetalColorMap.Apply ();
 
 			settingsInitialized = true;
@@ -205,7 +214,7 @@ public class MetallicGui : MonoBehaviour {
 				MS.MetalColor = _DiffuseMapOriginal.GetPixelBilinear(pixelUV.x, pixelUV.y);
 			}
 
-			_MetalColorMap.SetPixel (1, 1, MS.MetalColor);
+			_MetalColorMap.SetPixel (0, 0, MS.MetalColor);
 			_MetalColorMap.Apply ();
 
 		}

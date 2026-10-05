@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.ComponentModel;
 
@@ -179,6 +179,15 @@ public class HeightFromDiffuseSettings {
 }
 
 public class HeightFromDiffuseGui : MonoBehaviour {
+	// B75: shared initialization; no Update/OnGUI required.
+    public void InitializeForAgent(MainGui gui, GameObject preview) {
+        enabled = false;
+        testObject = preview;
+        thisMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+        MainGuiScript = gui;
+        Start();
+    }
+
 	
 	public MainGui MainGuiScript;
 
@@ -244,10 +253,10 @@ public class HeightFromDiffuseGui : MonoBehaviour {
 			InitializeSettings ();
 		}
 
-		_SampleColorMap1.SetPixel (1, 1, HFDS.SampleColor1);
+		_SampleColorMap1.SetPixel (0, 0, HFDS.SampleColor1);
 		_SampleColorMap1.Apply ();
 
-		_SampleColorMap2.SetPixel (1, 1, HFDS.SampleColor2);
+		_SampleColorMap2.SetPixel (0, 0, HFDS.SampleColor2);
 		_SampleColorMap2.Apply ();
 
 		doStuff = true;
@@ -264,14 +273,14 @@ public class HeightFromDiffuseGui : MonoBehaviour {
 				Destroy (_SampleColorMap1);
 			}
 			_SampleColorMap1 = new Texture2D (1, 1, TextureFormat.ARGB32, false, true);
-			_SampleColorMap1.SetPixel (1, 1, HFDS.SampleColor1);
+			_SampleColorMap1.SetPixel (0, 0, HFDS.SampleColor1);
 			_SampleColorMap1.Apply ();
 
 			if (_SampleColorMap2) {
 				Destroy (_SampleColorMap2);
 			}
 			_SampleColorMap2 = new Texture2D (1, 1, TextureFormat.ARGB32, false, true);
-			_SampleColorMap2.SetPixel (1, 1, HFDS.SampleColor2);
+			_SampleColorMap2.SetPixel (0, 0, HFDS.SampleColor2);
 			_SampleColorMap2.Apply ();
 
 			settingsInitialized = true;
@@ -458,14 +467,14 @@ public class HeightFromDiffuseGui : MonoBehaviour {
 			if( currentSelection == 1 ){
 				HFDS.SampleUV1 = pixelUV;
 				HFDS.SampleColor1 = sampledColor;
-				_SampleColorMap1.SetPixel (1, 1, HFDS.SampleColor1);
+				_SampleColorMap1.SetPixel (0, 0, HFDS.SampleColor1);
 				_SampleColorMap1.Apply ();
 			}
 			
 			if( currentSelection == 2 ){
 				HFDS.SampleUV2 = pixelUV;
 				HFDS.SampleColor2 = sampledColor;
-				_SampleColorMap2.SetPixel (1, 1, HFDS.SampleColor2);
+				_SampleColorMap2.SetPixel (0, 0, HFDS.SampleColor2);
 				_SampleColorMap2.Apply ();
 			}
 

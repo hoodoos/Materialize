@@ -1,3 +1,4 @@
+#if MATERIALIZE_LEGACY_OBJ
 
 using System;
 using System.IO;
@@ -237,3 +238,5 @@ namespace UnityExtension
         }
     }
 }
+
+#endif

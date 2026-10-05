@@ -1,7 +1,30 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class TilingTextureMakerGui : MonoBehaviour {
+    public IEnumerator ExecuteForAgent(MaterializeAgent.TilingSettings settings, GameObject preview, bool preserveAlpha, bool reference = false) {
+        enabled = false; testObject = preview;
+        Start(); Initialize(); agentPreserveAlpha = preserveAlpha;
+        if (reference) blitMaterial.shader = Shader.Find("Hidden/AgentReference/Blit_Seamless_Texture_Maker");
+        NewTexSizeX = settings.width; NewTexSizeY = settings.height;
+        Falloff = settings.Falloff; OverlapX = settings.OverlapX; OverlapY = settings.OverlapY;
+        SplatRotation = settings.SplatRotation; SplatRotationRandom = settings.SplatRotationRandom;
+        SplatScale = settings.SplatScale; SplatWobble = settings.SplatWobble; SplatRandomize = settings.SplatRandomize;
+        tileTech = settings.technique == "splat" ? TileTechnique.Splat : TileTechnique.Overlap;
+        blitMaterial.SetFloat("_PreserveAlpha", preserveAlpha ? 1 : 0);
+        if (NewTexSizeX == NewTexSizeY) SKSquare();
+        else if (NewTexSizeX > NewTexSizeY) {
+            int ratio = NewTexSizeX / NewTexSizeY;
+            if (ratio == 2) SKRectWide(); else if (ratio == 4) SKRectWide2(); else SKRectWide3();
+        } else {
+            int ratio = NewTexSizeY / NewTexSizeX;
+            if (ratio == 2) SKRectTall(); else if (ratio == 4) SKRectTall2(); else SKRectTall3();
+        }
+        yield return TileTextures();
+        yield return SetMaps();
+        Close();
+    }
+
 	
 	MainGui MGS;
 
@@ -20,6 +43,8 @@ public class TilingTextureMakerGui : MonoBehaviour {
 	RenderTexture _AOMapTemp;
 
 	RenderTexture _TileTemp;
+	RenderTexture _AlphaTemp;
+	RenderTexture _AlphaTempAlt;
 	RenderTexture _SplatTemp;
 	RenderTexture _SplatTempAlt;
 
@@ -79,6 +104,7 @@ public class TilingTextureMakerGui : MonoBehaviour {
 	Rect windowRect = new Rect (30, 300, 300, 530);
 
 	bool doStuff = false;
+    bool agentPreserveAlpha = false;
 
 	bool techniqueOverlap = true;
 	bool techniqueSplat = false;
@@ -577,11 +603,14 @@ public class TilingTextureMakerGui : MonoBehaviour {
 		CleanupTexture( _TileTemp );
 		CleanupTexture( _SplatTemp );
 		CleanupTexture( _SplatTempAlt );
+        RenderTexture.ReleaseTemporary(_AlphaTemp); RenderTexture.ReleaseTemporary(_AlphaTempAlt);
+        _AlphaTemp = null; _AlphaTempAlt = null;
 		
 	}
 
 	// need an overload to turn Texture2D into RenderTexture;
 	RenderTexture TileTexture ( Texture2D textureToTile, RenderTexture textureTarget, string TexName ) {
+        blitMaterial.SetFloat("_PreserveAlpha", agentPreserveAlpha && (TexName == "_DiffuseMap" || TexName == "_DiffuseMapOriginal") ? 1 : 0);
 		
 		CleanupTexture( _TileTemp );
 		_TileTemp = new RenderTexture (textureToTile.width, textureToTile.height, 0, RenderTextureFormat.ARGBHalf, RenderTextureReadWrite.Linear);
@@ -620,6 +649,8 @@ public class TilingTextureMakerGui : MonoBehaviour {
 
 		CleanupTexture( _SplatTemp );
 		CleanupTexture( _SplatTempAlt );
+        RenderTexture.ReleaseTemporary(_AlphaTemp); RenderTexture.ReleaseTemporary(_AlphaTempAlt);
+        _AlphaTemp = null; _AlphaTempAlt = null;
 
 		if (TexName == "_HDDisplacementMap") {
 			_SplatTemp = new RenderTexture (NewTexSizeX, NewTexSizeY, 0, RenderTextureFormat.ARGBHalf, RenderTextureReadWrite.Linear);
@@ -648,7 +679,13 @@ public class TilingTextureMakerGui : MonoBehaviour {
 			blitMaterial.SetFloat ("_FlipY", 0.0f);
 		}
 
-		// Clear the ping pong buffers
+		// Independent coverage buffers: RGB alpha is reserved for the height guide.
+        bool carryAlpha = blitMaterial.GetFloat("_PreserveAlpha") > 0.5f && (TexName == "_DiffuseMap" || TexName == "_DiffuseMapOriginal");
+        _AlphaTemp = RenderTexture.GetTemporary(NewTexSizeX, NewTexSizeY, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
+        _AlphaTempAlt = RenderTexture.GetTemporary(NewTexSizeX, NewTexSizeY, 0, RenderTextureFormat.RHalf, RenderTextureReadWrite.Linear);
+        Graphics.Blit(Texture2D.blackTexture, _AlphaTemp);
+        Graphics.Blit(Texture2D.blackTexture, _AlphaTempAlt);
+        // Clear the ping pong buffers
 		Graphics.Blit (Texture2D.blackTexture, _SplatTemp, blitMaterial, 2);
 		Graphics.Blit (Texture2D.blackTexture, _SplatTempAlt, blitMaterial, 2);
 
@@ -691,18 +728,22 @@ public class TilingTextureMakerGui : MonoBehaviour {
 			if( isEven ){
 				blitMaterial.SetTexture ("_TargetTex", _SplatTempAlt);
 				Graphics.Blit (textureToTile, _SplatTemp, blitMaterial, 1);
+                if (carryAlpha) { blitMaterial.SetTexture("_TargetAlphaTex", _AlphaTempAlt); Graphics.Blit(textureToTile, _AlphaTemp, blitMaterial, 4); }
 				isEven = false;
 			}else{
 				blitMaterial.SetTexture ("_TargetTex", _SplatTemp);
 				Graphics.Blit (textureToTile, _SplatTempAlt, blitMaterial, 1);
+                if (carryAlpha) { blitMaterial.SetTexture("_TargetAlphaTex", _AlphaTemp); Graphics.Blit(textureToTile, _AlphaTempAlt, blitMaterial, 4); }
 				isEven = true;
 			}
 		}
 
 		//GameObject.Destroy(transHelper.gameObject);
 
-		if (isEven) {
-			Graphics.Blit (_SplatTempAlt, textureTarget, blitMaterial, 3);
+		blitMaterial.SetFloat("_PreserveAlpha", carryAlpha ? 1 : 0);
+        blitMaterial.SetTexture("_FinalAlphaTex", isEven ? _AlphaTempAlt : _AlphaTemp);
+        if (isEven) {
+            Graphics.Blit (_SplatTempAlt, textureTarget, blitMaterial, 3);
 		} else {
 			Graphics.Blit (_SplatTemp, textureTarget, blitMaterial, 3);
 		}
@@ -711,6 +752,8 @@ public class TilingTextureMakerGui : MonoBehaviour {
 
 		CleanupTexture( _SplatTemp );
 		CleanupTexture( _SplatTempAlt );
+        RenderTexture.ReleaseTemporary(_AlphaTemp); RenderTexture.ReleaseTemporary(_AlphaTempAlt);
+        _AlphaTemp = null; _AlphaTempAlt = null;
 
 		return textureTarget;
 

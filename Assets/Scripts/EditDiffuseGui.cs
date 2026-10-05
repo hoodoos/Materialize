@@ -113,6 +113,15 @@ public class EditDiffuseSettings {
 }
 
 public class EditDiffuseGui : MonoBehaviour {
+	// B75: shared initialization; no Update/OnGUI required.
+    public void InitializeForAgent(MainGui gui, GameObject preview) {
+        enabled = false;
+        testObject = preview;
+        thisMaterial = new Material(Shader.Find("Hidden/Blit_Shader"));
+        MainGuiScript = gui;
+        Start();
+    }
+
 	
 	public MainGui MainGuiScript;
 
@@ -326,7 +335,7 @@ public class EditDiffuseGui : MonoBehaviour {
 		CleanupTexture (_AvgTempMap);
 	}
 
-	void InitializeTextures() {
+	public void InitializeTextures() {
 		
 		testObject.GetComponent<Renderer>().sharedMaterial = thisMaterial;
 		
@@ -348,7 +357,7 @@ public class EditDiffuseGui : MonoBehaviour {
 		
 	}
 
-	IEnumerator ProcessDiffuse( MapType whichTexture ) {
+	public IEnumerator ProcessDiffuse( MapType whichTexture ) {
 		
 		Debug.Log ("Processing Diffuse");
 		
@@ -401,7 +410,7 @@ public class EditDiffuseGui : MonoBehaviour {
 		
 	}
 
-	IEnumerator ProcessBlur () {
+	public IEnumerator ProcessBlur () {
 		
 		Debug.Log ("Processing Blur");
 

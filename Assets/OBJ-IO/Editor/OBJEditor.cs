@@ -1,4 +1,5 @@
-﻿
+#if MATERIALIZE_LEGACY_OBJ
+
 using System;
 using System.IO;
 using System.Collections;
@@ -48,3 +49,5 @@ public class OBJWindow : EditorWindow
 		}
     }
 }
+
+#endif

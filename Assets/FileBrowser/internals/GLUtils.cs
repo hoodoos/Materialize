@@ -7,13 +7,11 @@ public static class GLUtils {
 	static Material glMaterial = null;
 	private static Material GetGLMaterial() {
 	    if (glMaterial != null) return glMaterial;
-        glMaterial = new Material( "Shader \"Lines/Colored Blended\" {" +
-            "SubShader { Pass { " + 
-            "    Blend SrcAlpha OneMinusSrcAlpha " + 
-            "    ZWrite Off Cull Off Fog { Mode Off } " + 
-            "    BindChannels {" + 
-            "      Bind \"vertex\", vertex Bind \"color\", color }" + 
-            "} } }" ); 
+        glMaterial = new Material(Shader.Find("Hidden/Internal-Colored"));
+        glMaterial.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        glMaterial.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        glMaterial.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
+        glMaterial.SetInt("_ZWrite", 0);
         return glMaterial;
     }
     

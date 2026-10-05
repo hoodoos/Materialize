@@ -1,3 +1,4 @@
+#if MATERIALIZE_LEGACY_OBJ
 
 using System;
 using System.IO;
@@ -49,3 +50,4 @@ public class Example : MonoBehaviour
 		lStream.Close();
 	}
 }
+#endif

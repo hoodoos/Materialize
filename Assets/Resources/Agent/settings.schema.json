@@ -1,0 +1,1379 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "alpha",
+    "filters",
+    "alignment",
+    "tiling"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "alpha": {
+      "type": "string",
+      "enum": [
+        "preserve",
+        "opaque"
+      ]
+    },
+    "filters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "diffuse",
+        "height",
+        "normal",
+        "metallic",
+        "smoothness",
+        "ao",
+        "edge"
+      ],
+      "properties": {
+        "diffuse": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "AvgColorBlurSize",
+            "BlurSize",
+            "BlurContrast",
+            "LightMaskPow",
+            "LightPow",
+            "DarkMaskPow",
+            "DarkPow",
+            "HotSpot",
+            "DarkSpot",
+            "FinalContrast",
+            "FinalBias",
+            "ColorLerp",
+            "Saturation"
+          ],
+          "properties": {
+            "AvgColorBlurSize": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 100,
+              "default": 50
+            },
+            "BlurSize": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 100,
+              "default": 20
+            },
+            "BlurContrast": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "LightMaskPow": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "LightPow": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "DarkMaskPow": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "DarkPow": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "HotSpot": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "DarkSpot": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "FinalContrast": {
+              "type": "number",
+              "minimum": -2,
+              "maximum": 2,
+              "default": 1.0
+            },
+            "FinalBias": {
+              "type": "number",
+              "minimum": -0.5,
+              "maximum": 0.5,
+              "default": 0.0
+            },
+            "ColorLerp": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "Saturation": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            }
+          }
+        },
+        "height": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "useAdjustedDiffuse",
+            "useOriginalDiffuse",
+            "useNormal",
+            "Blur0Weight",
+            "Blur1Weight",
+            "Blur2Weight",
+            "Blur3Weight",
+            "Blur4Weight",
+            "Blur5Weight",
+            "Blur6Weight",
+            "Blur0Contrast",
+            "Blur1Contrast",
+            "Blur2Contrast",
+            "Blur3Contrast",
+            "Blur4Contrast",
+            "Blur5Contrast",
+            "Blur6Contrast",
+            "FinalContrast",
+            "FinalBias",
+            "FinalGain",
+            "SampleColor1",
+            "SampleUV1",
+            "UseSample1",
+            "IsolateSample1",
+            "HueWeight1",
+            "SatWeight1",
+            "LumWeight1",
+            "MaskLow1",
+            "MaskHigh1",
+            "Sample1Height",
+            "SampleColor2",
+            "SampleUV2",
+            "UseSample2",
+            "IsolateSample2",
+            "HueWeight2",
+            "SatWeight2",
+            "LumWeight2",
+            "MaskLow2",
+            "MaskHigh2",
+            "Sample2Height",
+            "SampleBlend",
+            "Spread",
+            "SpreadBoost"
+          ],
+          "properties": {
+            "useAdjustedDiffuse": {
+              "type": "boolean",
+              "default": true
+            },
+            "useOriginalDiffuse": {
+              "type": "boolean",
+              "default": false
+            },
+            "useNormal": {
+              "type": "boolean",
+              "default": false
+            },
+            "Blur0Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.15
+            },
+            "Blur1Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.19
+            },
+            "Blur2Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "Blur3Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "Blur4Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.7
+            },
+            "Blur5Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.9
+            },
+            "Blur6Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Blur0Contrast": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "Blur1Contrast": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "Blur2Contrast": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "Blur3Contrast": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "Blur4Contrast": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "Blur5Contrast": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "Blur6Contrast": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "FinalContrast": {
+              "type": "number",
+              "minimum": -10,
+              "maximum": 10,
+              "default": 1.5
+            },
+            "FinalBias": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "FinalGain": {
+              "type": "number",
+              "minimum": -0.5,
+              "maximum": 0.5,
+              "default": 0.0
+            },
+            "SampleColor1": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0,
+                0
+              ]
+            },
+            "SampleUV1": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0
+              ],
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "UseSample1": {
+              "type": "boolean",
+              "default": false
+            },
+            "IsolateSample1": {
+              "type": "boolean",
+              "default": false
+            },
+            "HueWeight1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "SatWeight1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "LumWeight1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2
+            },
+            "MaskLow1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "MaskHigh1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Sample1Height": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "SampleColor2": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0,
+                0
+              ]
+            },
+            "SampleUV2": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0
+              ],
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "UseSample2": {
+              "type": "boolean",
+              "default": false
+            },
+            "IsolateSample2": {
+              "type": "boolean",
+              "default": false
+            },
+            "HueWeight2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "SatWeight2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "LumWeight2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2
+            },
+            "MaskLow2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "MaskHigh2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Sample2Height": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "SampleBlend": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "Spread": {
+              "type": "number",
+              "minimum": 10,
+              "maximum": 200,
+              "default": 50.0
+            },
+            "SpreadBoost": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5,
+              "default": 1.0
+            }
+          }
+        },
+        "normal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "Blur0Contrast",
+            "Blur0Weight",
+            "Blur1Weight",
+            "Blur2Weight",
+            "Blur3Weight",
+            "Blur4Weight",
+            "Blur5Weight",
+            "Blur6Weight",
+            "FinalContrast",
+            "Angularity",
+            "AngularIntensity",
+            "UseDiffuse",
+            "ShapeRecognition",
+            "LightRotation",
+            "SlopeBlur",
+            "ShapeBias"
+          ],
+          "properties": {
+            "Blur0Contrast": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 50,
+              "default": 20.0
+            },
+            "Blur0Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "Blur1Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.35
+            },
+            "Blur2Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "Blur3Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.8
+            },
+            "Blur4Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Blur5Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.95
+            },
+            "Blur6Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.8
+            },
+            "FinalContrast": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 5.0
+            },
+            "Angularity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "AngularIntensity": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "UseDiffuse": {
+              "type": "boolean",
+              "default": true
+            },
+            "ShapeRecognition": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "LightRotation": {
+              "type": "number",
+              "minimum": -3.14,
+              "maximum": 3.14,
+              "default": 0.0
+            },
+            "SlopeBlur": {
+              "type": "integer",
+              "minimum": 5,
+              "maximum": 100,
+              "default": 50
+            },
+            "ShapeBias": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            }
+          }
+        },
+        "metallic": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "MetalColor",
+            "SampleUV",
+            "HueWeight",
+            "SatWeight",
+            "LumWeight",
+            "MaskLow",
+            "MaskHigh",
+            "BlurSize",
+            "OverlayBlurSize",
+            "BlurOverlay",
+            "FinalContrast",
+            "FinalBias",
+            "useAdjustedDiffuse",
+            "useOriginalDiffuse"
+          ],
+          "properties": {
+            "MetalColor": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0,
+                0
+              ]
+            },
+            "SampleUV": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0
+              ],
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "HueWeight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "SatWeight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "LumWeight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2
+            },
+            "MaskLow": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "MaskHigh": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "BlurSize": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 0
+            },
+            "OverlayBlurSize": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 100,
+              "default": 30
+            },
+            "BlurOverlay": {
+              "type": "number",
+              "minimum": -10,
+              "maximum": 10,
+              "default": 1.0
+            },
+            "FinalContrast": {
+              "type": "number",
+              "minimum": -2,
+              "maximum": 2,
+              "default": 1.0
+            },
+            "FinalBias": {
+              "type": "number",
+              "minimum": -0.5,
+              "maximum": 0.5,
+              "default": 0.0
+            },
+            "useAdjustedDiffuse": {
+              "type": "boolean",
+              "default": false
+            },
+            "useOriginalDiffuse": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "smoothness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "SampleColor1",
+            "SampleUV1",
+            "SampleColor2",
+            "SampleUV2",
+            "SampleColor3",
+            "SampleUV3",
+            "MetalSmoothness",
+            "UseSample1",
+            "IsolateSample1",
+            "HueWeight1",
+            "SatWeight1",
+            "LumWeight1",
+            "MaskLow1",
+            "MaskHigh1",
+            "Sample1Smoothness",
+            "UseSample2",
+            "IsolateSample2",
+            "HueWeight2",
+            "SatWeight2",
+            "LumWeight2",
+            "MaskLow2",
+            "MaskHigh2",
+            "Sample2Smoothness",
+            "UseSample3",
+            "IsolateSample3",
+            "HueWeight3",
+            "SatWeight3",
+            "LumWeight3",
+            "MaskLow3",
+            "MaskHigh3",
+            "Sample3Smoothness",
+            "BaseSmoothness",
+            "BlurSize",
+            "OverlayBlurSize",
+            "BlurOverlay",
+            "FinalContrast",
+            "FinalBias",
+            "useAdjustedDiffuse",
+            "useOriginalDiffuse"
+          ],
+          "properties": {
+            "SampleColor1": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0,
+                0
+              ]
+            },
+            "SampleUV1": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0
+              ],
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "SampleColor2": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0,
+                0
+              ]
+            },
+            "SampleUV2": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0
+              ],
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "SampleColor3": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 3,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0,
+                0
+              ],
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "SampleUV3": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "default": [
+                0,
+                0
+              ],
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "MetalSmoothness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.7
+            },
+            "UseSample1": {
+              "type": "boolean",
+              "default": false
+            },
+            "IsolateSample1": {
+              "type": "boolean",
+              "default": false,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "HueWeight1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "SatWeight1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "LumWeight1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2
+            },
+            "MaskLow1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "MaskHigh1": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Sample1Smoothness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "UseSample2": {
+              "type": "boolean",
+              "default": false
+            },
+            "IsolateSample2": {
+              "type": "boolean",
+              "default": false,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "HueWeight2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "SatWeight2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "LumWeight2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2
+            },
+            "MaskLow2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "MaskHigh2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Sample2Smoothness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "UseSample3": {
+              "type": "boolean",
+              "default": false,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "IsolateSample3": {
+              "type": "boolean",
+              "default": false,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "HueWeight3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "SatWeight3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "LumWeight3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "MaskLow3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.0,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "MaskHigh3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            },
+            "Sample3Smoothness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.2
+            },
+            "BaseSmoothness": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.1
+            },
+            "BlurSize": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100,
+              "default": 0
+            },
+            "OverlayBlurSize": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 100,
+              "default": 30
+            },
+            "BlurOverlay": {
+              "type": "number",
+              "minimum": -10,
+              "maximum": 10,
+              "default": 3.0
+            },
+            "FinalContrast": {
+              "type": "number",
+              "minimum": -2,
+              "maximum": 2,
+              "default": 1.0
+            },
+            "FinalBias": {
+              "type": "number",
+              "minimum": -0.5,
+              "maximum": 0.5,
+              "default": 0.0
+            },
+            "useAdjustedDiffuse": {
+              "type": "boolean",
+              "default": false
+            },
+            "useOriginalDiffuse": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "ao": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "Spread",
+            "FinalBias",
+            "FinalContrast",
+            "Depth",
+            "Blend",
+            "BlendAmount"
+          ],
+          "properties": {
+            "Spread": {
+              "type": "number",
+              "minimum": 10,
+              "maximum": 100,
+              "default": 50.0
+            },
+            "FinalBias": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "FinalContrast": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10,
+              "default": 1.0
+            },
+            "Depth": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 256,
+              "default": 100.0
+            },
+            "Blend": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "BlendAmount": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0,
+              "description": "Serialized upstream control; inactive in exported pixels. Preserved for GUI parity."
+            }
+          }
+        },
+        "edge": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "Blur0Contrast",
+            "Blur0Weight",
+            "Blur1Weight",
+            "Blur2Weight",
+            "Blur3Weight",
+            "Blur4Weight",
+            "Blur5Weight",
+            "Blur6Weight",
+            "FinalContrast",
+            "FinalBias",
+            "EdgeAmount",
+            "CreviceAmount",
+            "Pinch",
+            "Pillow"
+          ],
+          "properties": {
+            "Blur0Contrast": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5,
+              "default": 1.0
+            },
+            "Blur0Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Blur1Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "Blur2Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "Blur3Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.5
+            },
+            "Blur4Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.7
+            },
+            "Blur5Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.7
+            },
+            "Blur6Weight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 0.3
+            },
+            "FinalContrast": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 30,
+              "default": 1.0
+            },
+            "FinalBias": {
+              "type": "number",
+              "minimum": -1,
+              "maximum": 1,
+              "default": 0.0
+            },
+            "EdgeAmount": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "CreviceAmount": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1,
+              "default": 1.0
+            },
+            "Pinch": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10,
+              "default": 1.0
+            },
+            "Pillow": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 5,
+              "default": 1.0
+            }
+          }
+        }
+      }
+    },
+    "alignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "pointTL",
+        "pointTR",
+        "pointBL",
+        "pointBR",
+        "LensDistort",
+        "PerspectiveX",
+        "PerspectiveY"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "pointTL": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          },
+          "default": [
+            0,
+            1
+          ]
+        },
+        "pointTR": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          },
+          "default": [
+            1,
+            1
+          ]
+        },
+        "pointBL": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          },
+          "default": [
+            0,
+            0
+          ]
+        },
+        "pointBR": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number"
+          },
+          "default": [
+            1,
+            0
+          ]
+        },
+        "LensDistort": {
+          "type": "number",
+          "minimum": -1,
+          "maximum": 1,
+          "default": 0
+        },
+        "PerspectiveX": {
+          "type": "number",
+          "minimum": -5,
+          "maximum": 5,
+          "default": 0
+        },
+        "PerspectiveY": {
+          "type": "number",
+          "minimum": -5,
+          "maximum": 5,
+          "default": 0,
+          "description": "Upstream shader no-op; preserved for parity."
+        }
+      }
+    },
+    "tiling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "technique",
+        "width",
+        "height",
+        "Falloff",
+        "OverlapX",
+        "OverlapY",
+        "SplatRotation",
+        "SplatRotationRandom",
+        "SplatScale",
+        "SplatWobble",
+        "SplatRandomize"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "technique": {
+          "type": "string",
+          "enum": [
+            "overlap",
+            "splat"
+          ]
+        },
+        "width": {
+          "type": "integer",
+          "enum": [
+            512,
+            1024,
+            2048,
+            4096
+          ],
+          "default": 2048
+        },
+        "height": {
+          "type": "integer",
+          "enum": [
+            512,
+            1024,
+            2048,
+            4096
+          ],
+          "default": 2048
+        },
+        "Falloff": {
+          "type": "number",
+          "minimum": 0.01,
+          "maximum": 1,
+          "default": 0.1
+        },
+        "OverlapX": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.2
+        },
+        "OverlapY": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.2
+        },
+        "SplatRotation": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0
+        },
+        "SplatRotationRandom": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.25
+        },
+        "SplatScale": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 2,
+          "default": 1
+        },
+        "SplatWobble": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.2
+        },
+        "SplatRandomize": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
